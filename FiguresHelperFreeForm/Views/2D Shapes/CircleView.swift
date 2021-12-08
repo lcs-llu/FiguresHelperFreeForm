@@ -34,7 +34,14 @@ struct CircleView: View {
         
     }
     
-    var area: Double {
+    
+    
+    var area: Double? {
+        
+        guard let radius = radius
+        else {
+            return nil
+        }
         return Double.pi * radius * radius
     }
     
