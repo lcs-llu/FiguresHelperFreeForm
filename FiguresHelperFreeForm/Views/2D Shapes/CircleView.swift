@@ -59,6 +59,7 @@ struct CircleView: View {
                 TextField("Radius",
                           text: $provideRadius,
                             prompt: Text("Numeric value greater than 8"))
+                    .foregroundColor(.red)
                 // Output: Radius
                 SliderValueView(value: radius)
                 
