@@ -16,7 +16,23 @@ struct CircleView: View {
     @State var provideRadius = ""
     
     
-    
+    var radius = Double? {
+       
+        //Texts of the provided input
+        // 1, Ensure that we can simply change the input into double
+        //2, Ensure that the value as a Double is more than 0
+        //With a guard statement, we list the things we wish to be
+        //true and provide an action to carry out when those
+        //conditions are not met
+        guard let radius = Double(provideRadius),
+                radius > 0
+        else{
+            return nil
+    }
+        
+        return radius
+        
+    }
     
     var area: Double {
         return Double.pi * radius * radius
