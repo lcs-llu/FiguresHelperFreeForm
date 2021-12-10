@@ -9,58 +9,66 @@ import SwiftUI
 
 struct SphereView: View {
     
-    // MARK: Stored properties
-    @State var radius = 10.0
     
-    // MARK: Computed properties
-    var surfaceArea: Double {
+@State var providedRadius = ""
+var radius: Double? {
+        
+       guard let radius = Double(providedRadius),
+              radius > 0
+        else {
+                
+            return nil
+        }
+        
+        return radius
+    }
+    
+    var surfaceArea: Double? {
+        
+        guard let radius = radius else {
+        return nil
+                    }
+                    
         return 4 * Double.pi * radius * radius
-    }
-    
-    var body: some View {
-        ScrollView {
-            
-            VStack(alignment: .leading, spacing: 20) {
-                
-                DiagramView(image: "sphere",
-                            horizontalPadding: 50)
-                
-                SectionLabelView(text: "Radius", variable: "r")
-
-                // Input: Radius
-                Slider(value: $radius,
-                       in: 0.0...100.0,
-                       step: 0.1,
-                       label: {
-                    Text("Radius")
-                },
-                       minimumValueLabel: {
-                    Text("0")
-                },
-                       maximumValueLabel: {
-                    Text("100")
-                })
-                
-                // Output: Radius
-                SliderValueView(value: radius)
-                
-                SectionLabelView(text: "Surface Area", variable: "")
-                
-                // Output: Area
-                OutputValueView(value: surfaceArea, suffix: "cubed units")
-                
             }
-            
-        }
-        .navigationTitle("Sphere")
-        .padding()
-    }
-}
+                
+                
+                var body: some View {
+                ScrollView {
+                        
+                    VStack(alignment: .leading, spacing: 20) {
+                            
+                    DiagramView(image: "sphere",
+                                horizontalPadding: 50)
+                            
+                    SectionLabelView(text: "Radius", variable: "r")
 
-struct SphereView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            SphereView()
-        }
-    }
-}
+                            
+                        TextField("Radius",
+                        text: $providedRadius,
+                        prompt: Text("Please insert a Number."))
+                                
+                        .foregroundColor(radius == nil ? Color.red : Color.primary)
+                            
+                            
+                            
+                    SectionLabelView(text: "Surface Area", variable: "")
+
+                           
+                    OutputValueView(value: surfaceArea, suffix: "cubed units")
+                            
+                        }
+                        
+                    }
+                .navigationTitle("Sphere")
+                .padding()
+                }
+            }
+
+            struct SphereView_Previews: PreviewProvider {
+                static var previews: some View {
+                    NavigationView {
+                        SphereView()
+                    }
+                }
+            }

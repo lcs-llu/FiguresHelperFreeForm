@@ -9,37 +9,35 @@ import SwiftUI
 
 struct CircleView: View {
     
+    
+    
+    @State var providedRadius = ""
+    
     // MARK: Stored properties
-    @State var radius = 10.0
+    var radius: Double? {
+        
+        //Tests of the provided input
+        //1. Ensure that we can simply change the input into a Double
+        //2. Ensure that the values as a double is more than 0
+        //with the guard statement, we list the things we wish to be true... and provide an action to carry out when these conditions are not met.
+        guard let radius = Double(providedRadius),
+              radius > 0
+        else {
+                //when the tests are failed, we do not have a valid radius
+            return nil
+        }
+        // if we get here we know the radius is good
+        return radius
+    }
     
     // MARK: Computed properties
-    @State var provideRadius = ""
     
-    
-    var radius = Double? {
-       
-        //Texts of the provided input
-        // 1, Ensure that we can simply change the input into double
-        //2, Ensure that the value as a Double is more than 0
-        //With a guard statement, we list the things we wish to be
-        //true and provide an action to carry out when those
-        //conditions are not met
-        guard let radius = Double(provideRadius),
-                radius > 0
-        else{
-            return nil
-    }
-        
-        return radius
-        
-    }
-    
-    
-    
+    //Attempt to calculate the area, if it can't...... retuen nil
     var area: Double? {
-        
-        guard let radius = radius
-        else {
+        //is the input actually a double, or ...... is it a Double? (might be nil)
+        guard let radius = radius else {
+            //we didn't have a valid radius
+            //we can't calculate the area...
             return nil
         }
         return Double.pi * radius * radius
@@ -57,11 +55,12 @@ struct CircleView: View {
 
                 // Input: Radius
                 TextField("Radius",
-                          text: $provideRadius,
-                            prompt: Text("Numeric value greater than 8"))
-                    .foregroundColor(.red)
+                text: $providedRadius,
+                prompt: Text("Numberic value greater than 6."))
+                    // CONDITION      TRUE          FALSE
+                    .foregroundColor(radius == nil ? Color.red : Color.primary)
+                
                 // Output: Radius
-                SliderValueView(value: radius)
                 
                 SectionLabelView(text: "Area", variable: "")
                 

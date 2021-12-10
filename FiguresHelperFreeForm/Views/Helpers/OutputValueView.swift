@@ -9,22 +9,24 @@ import SwiftUI
 
 struct OutputValueView: View {
     
-    // MARK: Stored properties
+    
     let value: Double?
     let suffix: String
     
-    // MARK: Computed properties
-    var output: String {
+        var output: String {
         if let value = value {
-            let formattedValue = String(format: "%1f", value)
             
-           return "\(formattedValue) \(suffix)"
+            //we have a valid value to show
+            let formattedValue = String(format: "%.1f", value)
             
+            //return the output to show
+            return "\(formattedValue) \(suffix)"
         }
-    } else {
-        return "Cannot currently be computed."
+        else {
+            return "Cannot currently be computed."
+        }
     }
-}
+    
     var body: some View {
         Text(output)
             .font(.title3)
@@ -36,7 +38,8 @@ struct OutputValueView_Previews: PreviewProvider {
     static var previews: some View {
         OutputValueView(value: 12131.121,
                         suffix: "square units")
-        OutputValueView(value:nil)
-                   
+        
+        OutputValueView(value: nil,
+                        suffix: "square units")
     }
 }
